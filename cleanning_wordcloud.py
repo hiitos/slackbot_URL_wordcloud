@@ -1,24 +1,9 @@
 # scrapingからきたテキストデータをwordCloudできるよう整理する。
 import pandas as pd
-import urllib.request
-from pathlib import Path
-from tqdm import tqdm
-import argparse
-from pathlib import Path
-import sys
 import MeCab
 import pandas as pd
 import re
-from matplotlib import pyplot as plt
 from wordcloud import WordCloud
-from PIL import Image
-import numpy as np
-
-# scrapingからくるテキストデータは,文書の連なりだと仮定
-# やること
-# ・分かち書き→stopword
-# ・取り出すもの、とりあえず名詞、微妙なら形容詞、動詞も追加していい。
-# ・単語　頻度　の２列のデータフレームをreturn
 
 def wakati(sentence):
     # ----------------------------------
@@ -65,16 +50,15 @@ def word_cloud(list_text):
     str_text = ' '.join(list_text)
     #print(str_text)
     #print(type(str_text))
-    fontpath = '/Users/hitose.k/Library/Fonts/Makinas-4-Flat.otf'
+    fontpath = 'font_path'       # ***************fontpath***************
     wordcloud = WordCloud(background_color="white",
                         font_path=fontpath,
                         width=900,
                         height=500,
                         #mask=msk,
                         contour_width=1,
-                        contour_color="black"  # ,
-                        # stopwords=set(stop_words_ja)
-                          ).generate(str_text)
+                        contour_color="black" 
+                        ).generate(str_text)
     wordcloud.to_file("wc_image_ja.png")
 
     

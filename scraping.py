@@ -1,9 +1,7 @@
 #データの取得  (requests)
-from distutils.log import debug
 import requests
 from fake_useragent import UserAgent
 from bs4 import BeautifulSoup  # データの抽出  (Beautiful Soup)
-import re
 
 class Scraping:
     # slackにURLが載せられた時に起動

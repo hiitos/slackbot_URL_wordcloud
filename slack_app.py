@@ -1,12 +1,8 @@
 # slackapiを使って所望の情報を取得するクラス(加工はしない)
 from slack_sdk.errors import SlackApiError
 from slack_sdk import WebClient
-import os
-from email import message
 import requests
 import json
-from tqdm import tqdm
-import pandas as pd
 import logging
 
 class SlackApp:
@@ -47,17 +43,14 @@ class SlackApp:
         print("Submmit Image!!")
         client = WebClient(token=self.api_token)
         logger = logging.getLogger(__name__)
-        file_name = "/Users/hitose.k/Desktop/PlayGround/Python_WorkPlace/Slack_ScraClud/wc_image_ja.png"
+        file_name = "wc_image_ja.png"
         
         try:
-            # Call the files.upload method using the WebClient
-            # Uploading files requires the `files:write` scope
             result = client.files_upload(
                 channels=self.ch,
                 initial_comment="Create a wordCloud from a URL:smile:",
                 file=file_name,
             )
-            # Log the result
             logger.info(result)
         except SlackApiError as e:
             logger.error("Error uploading file: {}".format(e))
@@ -69,5 +62,4 @@ class SlackApp:
             'text': 'テストテキスト'
         }
         r = requests.post(url, headers=self.headers, data=params)
-        # r = requests.post(url, headers=self.headers, params=params)  
         print("return ", r.json())

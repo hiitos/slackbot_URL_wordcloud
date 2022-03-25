@@ -1,11 +1,9 @@
-# slackapiを使って所望の情報を取得するクラス
 import slack_app as sa
 import scraping as sc
 import cleanning_wordcloud as clean_word
 import sys
 import json
 import re
-sys.path.append('path')  # SlackAppスクリプトの格納パスを追加
 
 def main():
     # -------------------------------------
