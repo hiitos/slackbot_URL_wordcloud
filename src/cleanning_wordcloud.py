@@ -1,7 +1,6 @@
 # scrapingからきたテキストデータをwordCloudできるよう整理する。
 import pandas as pd
 import MeCab
-import pandas as pd
 import re
 from wordcloud import WordCloud
 
@@ -22,19 +21,27 @@ def wakati(sentence):
     parts = ["名詞"]
     tagger = MeCab.Tagger()
     words = tagger.parse(cleaned_text).splitlines()
+    print("Mecabがトリガーされた")
+    # print(words)
 
     words_arr = []
     for i in words:
-        if i == "EOS" or i == "":
+        if i == 'EOS' or i == '':
             continue
-        word_tmp = i.split()[0]   # 単語
-        part = i.split()[1].split(",")[0]  # 品詞
+
+        # print(i.split("\t"))
+        word_tmp = i.split("\t")[0]   # 単語
+        # print(word_tmp)
+
+        part = i.split("\t")[4].split("-")[0]  # 品詞
+        # print(part)
         if not (part in parts):  # 品詞の判定
             continue
         if word_tmp in stop_words:  # stop words
             continue
+        # print(word_tmp)
         words_arr.append(word_tmp)
-    #print(words_arr)
+    # print(words_arr)
     return words_arr
 
 def to_data(list_data):
@@ -50,8 +57,8 @@ def word_cloud(list_text):
     str_text = ' '.join(list_text)
     #print(str_text)
     #print(type(str_text))
-    fontpath = 'font_path'       # ***************fontpath***************
-    wordcloud = WordCloud(background_color="white",
+    fontpath = '/usr/share/fonts/opentype/ipaexfont-gothic/ipaexg.ttf'       # ***************fontpath***************
+    wordcloud_content = WordCloud(background_color="white",
                         font_path=fontpath,
                         width=900,
                         height=500,
@@ -59,7 +66,4 @@ def word_cloud(list_text):
                         contour_width=1,
                         contour_color="black" 
                         ).generate(str_text)
-    wordcloud.to_file("wc_image_ja.png")
-
-    
-
+    wordcloud_content.to_file("wc_image_ja.png")

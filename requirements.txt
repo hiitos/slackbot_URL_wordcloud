@@ -1,0 +1,10 @@
+slack_sdk
+fake_useragent
+beautifulsoup4
+pandas
+wordcloud
+requests
+# macab本体のインストール
+mecab-python3
+# ライブラリのインストール
+unidic-lite

@@ -1,0 +1,34 @@
+version: '3.6'
+services:
+  python3:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: 'python3'
+    working_dir: '/root/src'
+    tty: true
+    volumes:
+      - ./src:/root/src
+  tf:
+    build:
+      context: .
+      dockerfile: ./terraform/Dockerfile
+    image: hashicorp/terraform:1.2.1
+    container_name: tf_container
+    tty: true
+    working_dir: /terraform   #コンテナ内の作業ディレクトリ指定
+    volumes:
+      - ./terraform/:/terraform:cached   #ローカルのterraformディレクトリ配下をコンテナ内の作業ディレクトリ内にバインドマウント
+      - ./gcloud-config:/root/.config   #ローカルのgcloud認証情報をterraform用コンテナにバインドマウント
+    environment:
+      - TF_VAR_billing_id=$TF_VAR_billing_id
+      - TF_VAR_gcp_project=$TF_VAR_gcp_project
+  gcloud:
+    image: google/cloud-sdk:386.0.0-alpine
+    container_name: 'gcp_container'
+    working_dir: /terraform
+    volumes:
+      - ./gcloud-config:/root/.config
+volumes:
+  gcloud-config:  #バインドマウント先としてローカルディレクトリ指定、存在しない場合は自動で作成される
