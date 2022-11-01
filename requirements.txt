@@ -8,3 +8,4 @@ requests
 mecab-python3
 # ライブラリのインストール
 unidic-lite
+slack_bolt

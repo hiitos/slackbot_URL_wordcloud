@@ -4,6 +4,7 @@ import cleanning_wordcloud as clean_word
 import sys
 import json
 import re
+from slack_bolt import App
 
 def main():
     # -------------------------------------
